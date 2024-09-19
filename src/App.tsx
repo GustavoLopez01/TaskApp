@@ -16,8 +16,8 @@ function App() {
 
   return (
     <>
-      <Header dispatch={dispatch} />
-      <section className="bg-slate-100">
+      <Header dispatch={dispatch} tasks={state.tasks} />
+      <section className="bg-slate-100 sm:px-10 max-[640px]:px-10">
         <div className="max-w-4xl mx-auto flex justify-center">
           <Form 
             dispatch={dispatch}
@@ -26,7 +26,7 @@ function App() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto">
+      <section className="max-w-4xl mx-auto sm:px-10 max-[640px]:px-10">
         <TaskList
           dispatch={dispatch}
           tasks={state.tasks}
