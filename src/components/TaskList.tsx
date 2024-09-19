@@ -11,7 +11,6 @@ type TaskListProps = {
 }
 
 export const TaskList = ({ tasks, dispatch } : TaskListProps) => {
-    console.log(tasks);
     
     const getCategoryName = useMemo(() => (id: Task['category']) => {
         return categories.find((category) => category.id === id)?.label

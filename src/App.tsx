@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header dispatch={dispatch} />
       <section className="bg-slate-100">
         <div className="max-w-4xl mx-auto flex justify-center">
           <Form 
