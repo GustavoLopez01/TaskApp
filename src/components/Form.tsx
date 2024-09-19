@@ -15,9 +15,15 @@ const intialState = {
   category: 1
 }
 
+const intialErrorState = {
+  name: '',
+  description: '',
+}
+
 export const Form = ({ dispatch, state } : FormProps) => {
 
   const [task, setTask] = useState<Task>(intialState)
+  const [errors, setErrors] = useState(intialErrorState)
 
   useEffect(() => {
     if(state.idTask) {
@@ -40,11 +46,30 @@ export const Form = ({ dispatch, state } : FormProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const isSomeFielEmpty: boolean = handleValidate()    
+    if(isSomeFielEmpty) return
+
     dispatch({ type: 'add-task', payload: { task } })
     setTask({
       ...intialState,
       id: `task-${Date.now()}`,
     })
+  }
+
+  const handleValidate = () => {
+    let isEmptySomeField = false
+    let finalErrors = intialErrorState
+    for(var [key, value] of Object.entries(task)) {      
+      if(!value) {
+        finalErrors = {
+          ...finalErrors,
+          [key] : true
+        }
+        isEmptySomeField = true
+      }
+    }
+    setErrors(finalErrors)  
+    return isEmptySomeField
   }
 
   return (
@@ -60,6 +85,7 @@ export const Form = ({ dispatch, state } : FormProps) => {
                 onChange={handleChange}
                 value={task.name}
               />
+              { errors['name'] && <span className="font-semibold text-red-600"> El campo nombre no puede estar vacío. </span> }
             </div>
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="description">Descripción:</label>
@@ -71,6 +97,7 @@ export const Form = ({ dispatch, state } : FormProps) => {
                 onChange={handleChange}
                 value={task.description}
               />
+              { errors['description'] && <span className="font-semibold text-red-600"> El campo descripción no puede estar vacío. </span> }
             </div>
             <div className="flex flex-col">
               <label className="font-bold" htmlFor="category">Categoria</label>

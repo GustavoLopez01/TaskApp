@@ -4,7 +4,8 @@ import type { Task } from "../types"
 export type ActionsTask = 
     { type: 'add-task', payload: { task: Task } } |
     { type: 'set-task-id', payload: { id: Task['id'] } } |
-    { type: 'remove-task', payload: { id : Task['id'] } }
+    { type: 'remove-task', payload: { id : Task['id'] } } |
+    { type: 'clean-tasks' } 
 
 // Type state
 export type TaskAction = {
@@ -54,6 +55,14 @@ export const TaskReducer = (
                 tasks: state.tasks.filter((task) => task.id !== action.payload.id),
                 idTask: ''
             }
+        case 'clean-tasks':
+            return {
+                tasks: [],
+                idTask: ''
+            }
+        default:
+            return {
+                ...state
+            }
     }
-
 }  
